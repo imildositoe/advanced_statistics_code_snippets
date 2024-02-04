@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import geom
+from scipy.stats import poisson
 
 
 def proportions_viz():
@@ -15,6 +16,43 @@ def proportions_viz():
     plt.xlabel('Outcome')
     plt.ylabel('Proportion')
     plt.title('Proportion of "For" and "Against" Outcomes')
+
+    # Show plot
+    plt.show()
+
+
+def poison_dist():
+    # Parameters
+    lambda_ = 71
+
+    # Generate x values
+    x = np.arange(0, 200)
+
+    # Calculate probabilities
+    probabilities = poisson.pmf(x, lambda_)
+
+    # Find the threshold where probability drops below 0.5%
+    threshold_index = np.where(probabilities < 0.005)[0][0]
+
+    # Plot the distribution
+    plt.bar(x, probabilities, color='blue')
+
+    # Add labels and title
+    plt.xlabel('Number of Meteorites')
+    plt.ylabel('Probability')
+    plt.title('Poisson Distribution (λ=71)')
+
+    # Add vertical line for threshold
+    plt.axvline(x=threshold_index, color='red', linestyle='--', label='Threshold (0.5%)')
+
+    # Calculate and plot expectation and median
+    expectation = lambda_
+    median = poisson.median(lambda_)
+    plt.axvline(x=expectation, color='green', linestyle='--', label='Expectation')
+    plt.axvline(x=median, color='purple', linestyle='--', label='Median')
+
+    # Add legend
+    plt.legend()
 
     # Show plot
     plt.show()
