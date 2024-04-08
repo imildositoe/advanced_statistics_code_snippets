@@ -22,7 +22,7 @@ def proportions_viz():
     plt.show()
 
 
-def poison_dist():
+def poisson_dist():
     # Parameters
     lambda_ = 71
 
@@ -59,7 +59,7 @@ def poison_dist():
     plt.show()
 
 
-def poison_dist_2():
+def poisson_dist_2():
     import numpy as np
     import matplotlib.pyplot as plt
     from scipy.stats import poisson
@@ -96,7 +96,6 @@ def poison_dist_2():
 
 
 def negative_binomial_dist():
-
     # Parameters
     k = 71
     p = 0.5  # Assume 𝜉3 is 0.5
@@ -132,6 +131,50 @@ def negative_binomial_dist():
 
     # Show plot
     plt.show()
+
+
+def poisson_dist_3():
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.stats import poisson
+
+    # Define the expectation for the Poisson distribution
+    λ = 71
+
+    # Generate x values for plotting
+    x = np.arange(0, 200)
+
+    # Calculate the Poisson probability mass function (PMF) for each x
+    pmf = poisson.pmf(x, λ)
+
+    # Calculate cumulative probabilities
+    cumulative_prob = np.cumsum(pmf)
+
+    # Find the point where cumulative probability exceeds 0.995 (1 - 0.005)
+    threshold_index = np.argmax(cumulative_prob > 0.995)
+
+    # Plot the PMF
+    plt.figure(figsize=(10, 6))
+    plt.bar(x, pmf, label='Poisson Distribution (λ=71)', color='skyblue')
+
+    # Plot expectation and median
+    expectation = λ
+    median = λ + 1 / 3 - 0.02  # Using approximation for Poisson distribution
+    plt.axvline(x=expectation, color='red', linestyle='--', label='Expectation')
+    plt.axvline(x=median, color='green', linestyle='--', label='Median')
+
+    # Highlight probabilities less than 0.5%
+    plt.fill_between(x[:threshold_index], pmf[:threshold_index], color='orange', alpha=0.5, label='Probability < 0.5%')
+
+    plt.xlabel('Number of Meteorites')
+    plt.ylabel('Probability')
+    plt.title('Poisson Distribution of Meteorites Falling on Ocean')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    print("Expectation (λ):", expectation)
+    print("Median:", median)
 
 
 def geometric_dist():
@@ -173,6 +216,6 @@ def geometric_dist():
 
 if __name__ == '__main__':
     proportions_viz()
-    poison_dist_2()
+    poisson_dist_3()
     negative_binomial_dist()
     geometric_dist()
