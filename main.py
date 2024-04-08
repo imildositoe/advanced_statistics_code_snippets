@@ -38,44 +38,63 @@ if __name__ == '__main__':
     #
     # print("Linear Regression Function:", function)
 
-    import numpy as np
-    from sklearn.linear_model import Ridge
-    from sklearn.preprocessing import PolynomialFeatures
-    from sklearn.metrics import mean_squared_error
+    # ------------------------------
+
+    # import numpy as np
+    # from sklearn.linear_model import Ridge
+    # from sklearn.preprocessing import PolynomialFeatures
+    # from sklearn.metrics import mean_squared_error
+    #
+    # # Define the data
+    # x = np.array([-3, -13, 16, -5, 13, -19, 12, -17, -2, 6, 1, 9, -14, -10, 11, 0, 5, 4, 18, -7, 8, 14])
+    # y = np.array([-470285.75, -896973342427.97, -5969502572609.42, -72645568.04, -741877267973.1, -37137459427225.83,
+    #               -340017811793.51, -13102338007357.26, -9823.26, -298898753.66, 24.8, -17875424305.59,
+    #               -1969295907622.04, -69515637329.79, -143863543867.51, -5.99, -45652790.26, -4104126.5,
+    #               -20362761303926.95, -2063362968.96, -5555367334.52, -1525579228478.32])
+    #
+    # # Reshape x to be a 2D array
+    # x = x.reshape(-1, 1)
+    #
+    # # Create polynomial features
+    # poly = PolynomialFeatures(degree=10)
+    # X_poly = poly.fit_transform(x)
+    #
+    # # Fit the OLS model
+    # ols_model = np.linalg.lstsq(X_poly, y, rcond=None)[0]
+    #
+    # # Fit the Ridge model
+    # ridge_model = Ridge(alpha=1.0)  # Set regularization parameter here
+    # ridge_model.fit(X_poly, y)
+    # ridge_coefs = ridge_model.coef_
+    #
+    # # Print the coefficients
+    # print("OLS coefficients:", ols_model)
+    # print("Ridge coefficients:", ridge_coefs)
+    #
+    # # Calculate the mean squared error for each model
+    # ols_preds = np.dot(X_poly, ols_model)
+    # ridge_preds = ridge_model.predict(X_poly)
+    #
+    # ols_mse = mean_squared_error(y, ols_preds)
+    # ridge_mse = mean_squared_error(y, ridge_preds)
+    #
+    # print("OLS MSE:", ols_mse)
+    # print("Ridge MSE:", ridge_mse)
+
+    import matplotlib.pyplot as plt
 
     # Define the data
-    x = np.array([-3, -13, 16, -5, 13, -19, 12, -17, -2, 6, 1, 9, -14, -10, 11, 0, 5, 4, 18, -7, 8, 14])
-    y = np.array([-470285.75, -896973342427.97, -5969502572609.42, -72645568.04, -741877267973.1, -37137459427225.83,
-                  -340017811793.51, -13102338007357.26, -9823.26, -298898753.66, 24.8, -17875424305.59,
-                  -1969295907622.04, -69515637329.79, -143863543867.51, -5.99, -45652790.26, -4104126.5,
-                  -20362761303926.95, -2063362968.96, -5555367334.52, -1525579228478.32])
+    x = [-3, -13, 16, -5, 13, -19, 12, -17, -2, 6, 1, 9, -14, -10, 11, 0, 5, 4, 18, -7, 8, 14]
+    y = [-470285.75, -896973342427.97, -5969502572609.42, -72645568.04, -741877267973.1, -37137459427225.83,
+         -340017811793.51, -13102338007357.26, -9823.26, -298898753.66, 24.8, -17875424305.59, -1969295907622.04,
+         -69515637329.79, -143863543867.51, -5.99, -45652790.26, -4104126.5, -20362761303926.95, -2063362968.96,
+         -5555367334.52, -1525579228478.32]
 
-    # Reshape x to be a 2D array
-    x = x.reshape(-1, 1)
+    # Create the scatter plot
+    plt.scatter(x, y)
+    plt.title('Scatter plot of given points')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.show()
 
-    # Create polynomial features
-    poly = PolynomialFeatures(degree=10)
-    X_poly = poly.fit_transform(x)
-
-    # Fit the OLS model
-    ols_model = np.linalg.lstsq(X_poly, y, rcond=None)[0]
-
-    # Fit the Ridge model
-    ridge_model = Ridge(alpha=1.0)  # Set regularization parameter here
-    ridge_model.fit(X_poly, y)
-    ridge_coefs = ridge_model.coef_
-
-    # Print the coefficients
-    print("OLS coefficients:", ols_model)
-    print("Ridge coefficients:", ridge_coefs)
-
-    # Calculate the mean squared error for each model
-    ols_preds = np.dot(X_poly, ols_model)
-    ridge_preds = ridge_model.predict(X_poly)
-
-    ols_mse = mean_squared_error(y, ols_preds)
-    ridge_mse = mean_squared_error(y, ridge_preds)
-
-    print("OLS MSE:", ols_mse)
-    print("Ridge MSE:", ridge_mse)
-
+    # -------------------------
