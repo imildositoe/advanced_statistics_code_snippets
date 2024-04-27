@@ -38,3 +38,22 @@ plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
 plt.show()
+
+# --------------------------------------------------------
+
+ridge_pipeline = Pipeline([
+    ('polynomial', PolynomialFeatures(degree=10, include_bias=False)),
+    ('ridge regression', Ridge(alpha=10**8))
+])
+ridge_pipeline.fit(x, y)
+
+# Applying the prediction line
+y_values_ridge = ridge_pipeline.predict(x_values_plot)
+
+# Visualizing the points jointly with the prediction line
+plt.scatter(x, y, color='black', label='Data Points')
+plt.plot(x_values_plot, y_values_ridge, label='Ridge Predicted Values')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
