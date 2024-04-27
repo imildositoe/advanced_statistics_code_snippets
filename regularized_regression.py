@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.pipeline import Pipeline
 
-# Data given in th task
+# Data given in the task
 data = [
     (-3, -470285.75), (-13, -896973342427.97), (16, -5969502572609.42),
     (-5, -72645568.04), (13, -741877267973.1), (-19, -37137459427225.83),
@@ -27,9 +27,11 @@ pipeline = Pipeline([
 ])
 pipeline.fit(x, y)
 
+# Applying the prediction line
 x_values_plot = np.linspace(min(x) - 1, max(x) + 1, 400).reshape(-1, 1)
 y_values_plot = pipeline.predict(x_values_plot)
 
+# Visualizing the points jointly with the prediction line
 plt.scatter(x, y, color='black', label='Data Points')
 plt.plot(x_values_plot, y_values_plot, label='OLS Predicted Values')
 plt.xlabel('x')
