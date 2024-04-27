@@ -26,3 +26,13 @@ pipeline = Pipeline([
     ('linear', LinearRegression())
 ])
 pipeline.fit(x, y)
+
+x_values_plot = np.linspace(min(x) - 1, max(x) + 1, 400).reshape(-1, 1)
+y_values_plot = pipeline.predict(x_values_plot)
+
+plt.scatter(x, y, color='black', label='Data Points')
+plt.plot(x_values_plot, y_values_plot, label='OLS Predicted Values')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
