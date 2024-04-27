@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
+from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import Pipeline
 
 # Data given in the task
@@ -22,7 +22,7 @@ y = np.array([point[1] for point in data])
 
 # Converting polynomial into linear regression using Pipeline
 pipeline = Pipeline([
-    ('poly', PolynomialFeatures(degree=10, include_bias=False)),
+    ('poly', PolynomialFeatures(degree=11, include_bias=False)),
     ('linear', LinearRegression())
 ])
 pipeline.fit(x, y)
@@ -42,18 +42,21 @@ plt.show()
 # --------------------------------------------------------
 
 ridge_pipeline = Pipeline([
-    ('polynomial', PolynomialFeatures(degree=10, include_bias=False)),
-    ('ridge regression', Ridge(alpha=10**8))
+    ('polynomial', PolynomialFeatures(degree=11, include_bias=False)),
+    ('ridge regression', Ridge(alpha=1))
 ])
 ridge_pipeline.fit(x, y)
 
-# Applying the prediction line
+# Applying the prediction line using ridge
 y_values_ridge = ridge_pipeline.predict(x_values_plot)
 
-# Visualizing the points jointly with the prediction line
+# Visualizing the points jointly with the prediction line using ridge
 plt.scatter(x, y, color='black', label='Data Points')
 plt.plot(x_values_plot, y_values_ridge, label='Ridge Predicted Values')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
 plt.show()
+
+print(pipeline.steps[1][1].coef_)
+print(ridge_pipeline.steps[1][1].coef_)
