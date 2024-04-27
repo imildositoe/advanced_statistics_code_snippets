@@ -16,3 +16,6 @@ data = [
 ]
 x = np.array([point[0] for point in data]).reshape(-1, 1)
 y = np.array([point[1] for point in data])
+print(x)
+print('-----------------------------------------------')
+print(y)
