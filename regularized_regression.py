@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 from sklearn.pipeline import Pipeline
 
+# Data given in th task
 data = [
     (-3, -470285.75), (-13, -896973342427.97), (16, -5969502572609.42),
     (-5, -72645568.04), (13, -741877267973.1), (-19, -37137459427225.83),
@@ -14,8 +15,14 @@ data = [
     (18, -20362761303926.95), (-7, -2063362968.96), (8, -5555367334.52),
     (14, -1525579228478.32)
 ]
+
+# Retrieving the given data separated into x and y arrays
 x = np.array([point[0] for point in data]).reshape(-1, 1)
 y = np.array([point[1] for point in data])
-print(x)
-print('-----------------------------------------------')
-print(y)
+
+# Converting polynomial into linear regression using Pipeline
+pipeline = Pipeline([
+    ('poly', PolynomialFeatures(degree=10, include_bias=False)),
+    ('linear', LinearRegression())
+])
+pipeline.fit(x, y)
