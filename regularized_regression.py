@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression, Ridge, RidgeCV
 from sklearn.pipeline import Pipeline
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
 
 # Data given in the task
 data = [
@@ -65,66 +67,49 @@ plt.show()
 # Visualizing the coefficients of ridge
 print(pipeline_ridge.steps[1][1].coef_)
 
-
-def ridge_fit(train, predictors, target, alpha):
-    X = train[predictors].copy()
-    y = train[[target]].copy()
-
-    x_mean = X.mean()
-    x_std = X.std()
-
-    X = (X - x_mean) / x_std
-    X["intercept"] = 1
-    X = X[["intercept"] + predictors]
-
-    penalty = alpha * np.identity(X.shape[1])
-    penalty[0][0] = 0
-
-    B = np.linalg.inv(X.T @ X + penalty) @ X.T @ y
-    # B.index = ["intercept", "athletes", "events"]
-    return B, x_mean, x_std
-
-B, x_mean, x_std = ridge_fit(train, predictors, target, alpha)
+# Assuming train, test, predictors, and target are defined
+predictors = x
+target = y
+train, test = train_test_split(data, test_size=0.2, random_state=1)
 
 
-def ridge_predict(test, predictors, x_mean, x_std, B):
-    test_X = test[predictors]
-    test_X = (test_X - x_mean) / x_std
-    test_X["intercept"] = 1
-    test_X = test_X[["intercept"] + predictors]
+def ridge_fit(train, predictors, target, alpha, degree):
+    poly = PolynomialFeatures(degree=degree)
+    X_train_poly = poly.fit_transform(train[predictors])
 
-    predictions = test_X @ B
+    ridge = Ridge(alpha=alpha)
+    ridge.fit(X_train_poly, train[target])
+
+    return ridge, poly
+
+
+def ridge_predict(test, predictors, ridge, poly):
+    X_test_poly = poly.transform(test[predictors])
+    predictions = ridge.predict(X_test_poly)
+
     return predictions
 
-predictions = ridge_predict(test, predictors, x_mean, x_std, B)
-
-
-ridge = Ridge(alpha=alpha)
-ridge.fit(X[predictors], y)
-
-# sklearn_predictions = ridge.predict(test_X[predictors])
-# predictions - sklearn_predictions
-
-from sklearn.metrics import mean_absolute_error
 
 errors = []
 alphas = [10 ** i for i in range(-2, 4)]
+degrees = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  # You can adjust the degrees as needed
 
 for alpha in alphas:
-    B, x_mean, x_std = ridge_fit(train, predictors, target, alpha)
-    predictions = ridge_predict(test, predictors, x_mean, x_std, B)
+    for degree in degrees:
+        ridge_model, poly_transformer = ridge_fit(train, predictors, target, alpha, degree)
+        predictions = ridge_predict(test, predictors, ridge_model, poly_transformer)
 
-    errors.append(mean_absolute_error(test[target], predictions))
+        errors.append((alpha, degree, mean_absolute_error(test[target], predictions)))
 
 print(errors)
 
-
-
 # To remove
-print('-------Rounded---------')
-for aa in [-2.45102755e+09, 1.54163931e+08, 1.56445499e+08, -8.25327605e+06, -2.13412020e+06, 1.22366752e+05, 4.34710995e+03, -6.37603975e+02, 5.01616160e+01, -4.96630319e+00, -1.30642987e-01]:
-    print(np.round(aa, 2))
-print('........')
-for aa in [-2.28344677e+09, 1.50087545e+08, 1.48085753e+08, -8.13910869e+06, -2.00344222e+06, 1.21121431e+05, 3.47806954e+03, -6.32146360e+02, 5.27292402e+01, -4.97436077e+00, -1.33415648e-01]:
-    print(np.round(aa, 2))
-print('-------Rounded---------')
+# print('-------Rounded---------')
+# for aa in [-2.45102755e+09, 1.54163931e+08, 1.56445499e+08, -8.25327605e+06, -2.13412020e+06, 1.22366752e+05,
+#            4.34710995e+03, -6.37603975e+02, 5.01616160e+01, -4.96630319e+00, -1.30642987e-01]:
+#     print(np.round(aa, 2))
+# print('........')
+# for aa in [-2.28344677e+09, 1.50087545e+08, 1.48085753e+08, -8.13910869e+06, -2.00344222e+06, 1.21121431e+05,
+#            3.47806954e+03, -6.32146360e+02, 5.27292402e+01, -4.97436077e+00, -1.33415648e-01]:
+#     print(np.round(aa, 2))
+# print('-------Rounded---------')
