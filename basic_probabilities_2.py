@@ -93,6 +93,7 @@ def solve2():
 
 
 def main():
+    solve1()
     solve2()
 
 
