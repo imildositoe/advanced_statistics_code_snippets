@@ -6,7 +6,7 @@ from scipy.integrate import quad
 def solve1():
     # Define the PDF function
     def pdf(y):
-        return 3.2 * y * np.exp(-4 * y ** 2) + 5.9 * y * np.exp(-5 * y ** 2)
+        return (10/99) * y * np.exp(-4 * y ** 2) + 5.9 * y * np.exp(-5 * y ** 2)
 
     # Calculate the probability of waiting between 2 and 4 hours
     prob, _ = quad(pdf, 2, 4)
@@ -94,7 +94,7 @@ def solve2():
 
 def main():
     solve1()
-    solve2()
+    # solve2()
 
 
 if __name__ == '__main__':
