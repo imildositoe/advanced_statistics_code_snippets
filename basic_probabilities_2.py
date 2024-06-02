@@ -30,7 +30,6 @@ def main():
 
     # In order to display the histogram,
     y_values_minutes = np.linspace(2, 4, (4 - 2) * 60)
-    print(y_values_minutes)
     prob_values_minutes = pdf(y_values_minutes)
     prob_per_minute = prob_values_minutes * (1 / 60)
 
