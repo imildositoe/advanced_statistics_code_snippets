@@ -13,15 +13,16 @@ def solve1():
     # We exclude the second which is the absolute error, as quad returns an array of probability and absolute error
     print("The probability of waiting between 2 and 4 hours is: ", quad(pdf, 2, 4)[0])
 
-    # Define the range for y
-    y = np.linspace(0, 5, 1000)
+    # In order to calculate our probabilities, we will first create a range of our independent values
+    # We will create 500 values between 0 and 4 using linspace function
+    y_values = np.linspace(0, 4, 500)
 
     # Calculate the PDF values
-    pdf_values = pdf(y)
+    pdf_values = pdf(y_values)
 
     # Plot the PDF
     plt.figure(figsize=(10, 5))
-    plt.plot(y, pdf_values, label='PDF')
+    plt.plot(y_values, pdf_values, label='PDF')
     plt.xlabel('Time (hours)')
     plt.ylabel('Probability Density')
     plt.title('Probability Density Function')
