@@ -28,8 +28,8 @@ def main():
     plt.grid(True)
     plt.show()
 
-    # In order to display the histogram,
-    y_values_minutes = np.linspace(2, 4, (4 - 2) * 60)
+    # In order to display the histogram, we will generate 120 values between 2 and 4, which corresponds to 4h-2h=2hours
+    y_values_minutes = np.linspace(2, 4, 120)
     prob_values_minutes = pdf(y_values_minutes)
     prob_per_minute = prob_values_minutes * (1 / 60)
 
