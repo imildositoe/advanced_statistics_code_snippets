@@ -4,15 +4,16 @@ from scipy.integrate import quad
 
 
 def solve1():
-    # Define the PDF function
+    # Here we define the probability density function pdf()
     def pdf(y):
-        return (10/99) * y * np.exp(-4 * y ** 2) + 5.9 * y * np.exp(-5 * y ** 2)
+        return (10/99) * np.exp(-5 * y ** 2) * (32 * np.exp(y ** 2) + 59) * y
 
     # Calculate the probability of waiting between 2 and 4 hours
     prob, _ = quad(pdf, 2, 4)
 
     # Print the probability
     print(f"Probability of waiting between 2 and 4 hours: {prob:.4f}")
+    print("The probability of waiting between 2 and 4 hours is: ", prob)
 
     # Define the range for y
     y = np.linspace(0, 5, 1000)
