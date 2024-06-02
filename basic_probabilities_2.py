@@ -18,12 +18,12 @@ def solve1():
     y_values = np.linspace(0, 4, 500)
     prob_values = pdf(y_values)
 
-    # Plot the PDF
+    # Now we can plot and display the pdf graph
     plt.figure(figsize=(10, 5))
     plt.plot(y_values, prob_values, label='PDF')
-    plt.xlabel('Time (hours)')
-    plt.ylabel('Probability Density')
-    plt.title('Probability Density Function')
+    plt.xlabel('Time in hours')
+    plt.ylabel('Probability value')
+    plt.title('Probability Density Function Graph')
     plt.legend()
     plt.grid(True)
     plt.show()
