@@ -4,16 +4,14 @@ from scipy.integrate import quad
 
 
 def solve1():
-    # Here we define the probability density function pdf()
+    # We first define the probability density function pdf
     def pdf(y):
         return (10/99) * np.exp(-5 * y ** 2) * (32 * np.exp(y ** 2) + 59) * y
 
-    # Calculate the probability of waiting between 2 and 4 hours
-    prob = quad(pdf, 2, 4)
-
-    # Showing the calculated probability of waiting between 2 and 4 hours based on the pdf
-    # It is taken the first item, as the return is an array containing the probability and the absolute error
-    print("The probability of waiting between 2 and 4 hours is: ", prob[0])
+    # Then we calculate the probability of waiting between 2 and 4 hours using the definite integral function quad
+    # We print the calculated probability by taking only the first item prob[0]
+    # We exclude the second which is the absolute error, as quad returns an array of probability and absolute error
+    print("The probability of waiting between 2 and 4 hours is: ", quad(pdf, 2, 4)[0])
 
     # Define the range for y
     y = np.linspace(0, 5, 1000)
