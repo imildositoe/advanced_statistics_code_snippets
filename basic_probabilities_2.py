@@ -29,16 +29,18 @@ def main():
     plt.show()
 
     # In order to display the histogram, we will generate 120 values between 2 and 4, which corresponds to 4h-2h=2hours
+    # Then we will determine the probabilities in each probability value
+    # Then divide by 60 to obtain the actual probability per given minute
     y_values_minutes = np.linspace(2, 4, 120)
     prob_values_minutes = pdf(y_values_minutes)
-    prob_per_minute = prob_values_minutes * (1 / 60)
+    prob_per_minute = prob_values_minutes/60
 
-    # Plot the histogram
+    # Now we can plot the histogram displaying each bar with the probability of being in that minute
     plt.figure(figsize=(10, 5))
-    plt.bar(y_values_minutes, prob_per_minute, width=1 / 60, edgecolor='black', alpha=0.7)
+    plt.bar(y_values_minutes, prob_per_minute, width=1/60, edgecolor='black', alpha=0.7)
     plt.xlabel('Time in hours')
     plt.ylabel('Probability value/minute')
-    plt.title('Probability per Minute Histogram')
+    plt.title('Probability/minute Histogram')
     plt.grid(True)
     plt.show()
 
