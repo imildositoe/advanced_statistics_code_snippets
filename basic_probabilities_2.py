@@ -11,9 +11,9 @@ def solve1():
     # Calculate the probability of waiting between 2 and 4 hours
     prob, _ = quad(pdf, 2, 4)
 
-    # Print the probability
-    print(f"Probability of waiting between 2 and 4 hours: {prob:.4f}")
+    # Showing the calculated probability of waiting between 2 and 4 hours based on the pdf
     print("The probability of waiting between 2 and 4 hours is: ", prob)
+    print("The absolute error probability of waiting between 2 and 4 hours is: ", _)
 
     # Define the range for y
     y = np.linspace(0, 5, 1000)
