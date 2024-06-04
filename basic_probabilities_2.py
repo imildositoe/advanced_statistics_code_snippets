@@ -5,7 +5,7 @@ from scipy.optimize import root_scalar
 
 
 def main():
-    # We first define the probability density function pdf.
+    # We first define the probability density function PDF.
     def pdf(y):
         return (10 / 99) * np.exp(-5 * y ** 2) * (32 * np.exp(y ** 2) + 59) * y
 
