@@ -23,7 +23,6 @@ def main():
     y_values = np.linspace(0, 4, 500)
     prob_values = pdf(y_values)
 
-
     # Calculating the mean and variance using the correspondent math formulas over 0 to infinite
     # The intervals are from 0 to infinite, since they describe time
     mean = quad(lambda y: y * pdf(y), 0, np.inf)[0]
@@ -45,7 +44,6 @@ def main():
     print("The Q2 or median is: ", q2)
     print("The Q3 is: ", q3)
 
-
     # Now we can plot and display the pdf graph
     # We will also display the representation lines of the Mean, Variance, Q1, Q2, and Q3
     plt.figure(figsize=(10, 5))
@@ -60,7 +58,6 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.show()
-
 
     # In order to display the histogram, we will generate 120 values between 2 and 4, which corresponds to 4h-2h=2hours
     # Then we will determine the probabilities in each probability value
@@ -81,4 +78,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
