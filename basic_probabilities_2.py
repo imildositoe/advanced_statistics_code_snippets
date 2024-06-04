@@ -56,10 +56,10 @@ def mean_variance_quartile():
         return quad(pdf, 0, y)[0]
 
     # Calculate the mean
-    mean, _ = quad(lambda y: y * pdf(y), 0, np.inf)
+    mean = quad(lambda y: y * pdf(y), 0, np.inf)[0]
 
     # Calculate the variance
-    mean_square, _ = quad(lambda y: y ** 2 * pdf(y), 0, np.inf)
+    mean_square = quad(lambda y: y ** 2 * pdf(y), 0, np.inf)[0]
     variance = mean_square - mean ** 2
 
     # Calculate the quartiles using the CDF
@@ -79,7 +79,7 @@ def mean_variance_quartile():
     print(f"Q3: {q3:.4f}")
 
     # Define the range for y
-    y = np.linspace(0, 5, 1000)
+    y = np.linspace(0, 4, 500)
 
     # Calculate the PDF values
     pdf_values = pdf(y)
