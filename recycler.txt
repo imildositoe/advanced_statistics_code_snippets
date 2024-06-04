@@ -1,0 +1,51 @@
+# def mean_variance_quartile():
+    # Define the PDF function
+    # def pdf(y):
+    #     return (10 / 99) * np.exp(-5 * y ** 2) * (32 * np.exp(y ** 2) + 59) * y
+
+    # Define the CDF function (integral of the PDF)
+    # def cdf(y):
+    #     return quad(pdf, 0, y)[0]
+
+    # # Calculate the mean (since our pdf is limited to 0;np.inf, as we are dealing with time)
+    # mean = quad(lambda y: y * pdf(y), 0, np.inf)[0]
+    #
+    # # Calculate the variance
+    # mean_square = quad(lambda y: y ** 2 * pdf(y), 0, np.inf)[0]
+    # variance = mean_square - mean ** 2
+
+    # Calculate the quartiles using the CDF
+    # def find_quantile(prob):
+    #     result = root_scalar(lambda y: cdf(y) - prob, bracket=[0, 10])
+    #     return result.root
+    #
+    # q1 = find_quantile(0.25)
+    # median = find_quantile(0.50)
+    # q3 = find_quantile(0.75)
+
+    # Print the results
+    # print(f"Mean: {mean:.4f}")
+    # print(f"Variance: {variance:.4f}")
+    # print(f"Q1: {q1:.4f}")
+    # print(f"Median: {median:.4f}")
+    # print(f"Q3: {q3:.4f}")
+
+    # # Define the range for y
+    # y = np.linspace(0, 4, 500)
+    #
+    # # Calculate the PDF values
+    # pdf_values = pdf(y)
+
+    # Plot the PDF with mean and quartiles
+    # plt.figure(figsize=(10, 5))
+    # plt.plot(y, pdf_values, label='PDF')
+    # plt.axvline(mean, color='r', linestyle='--', label=f'Mean: {mean:.2f}')
+    # plt.axvline(q1, color='g', linestyle='--', label=f'Q1: {q1:.2f}')
+    # plt.axvline(median, color='b', linestyle='--', label=f'Median: {median:.2f}')
+    # plt.axvline(q3, color='g', linestyle='--', label=f'Q3: {q3:.2f}')
+    # plt.xlabel('Time (hours)')
+    # plt.ylabel('Probability Density')
+    # plt.title('Probability Density Function with Mean and Quartiles')
+    # plt.legend()
+    # plt.grid(True)
+    # plt.show()
