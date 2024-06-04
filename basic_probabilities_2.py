@@ -48,10 +48,10 @@ def main():
     # We will also display the representation lines of the Mean, Variance, Q1, Q2, and Q3
     plt.figure(figsize=(10, 5))
     plt.plot(y_values, prob_values, label='PDF')
-    plt.axvline(mean, color='r', linestyle='--', label=f'Mean: {mean:.2f}')
+    plt.axvline(mean, color='g', linestyle='--', label=f'Mean: {mean:.2f}')
     plt.axvline(variance, color='m', linestyle='--', label=f'Variance: {variance:.2f}')
     plt.axvline(q1, color='g', linestyle='--', label=f'Q1: {q1:.2f}')
-    plt.axvline(q2, color='b', linestyle='--', label=f'Q2: {q2:.2f}')
+    plt.axvline(q2, color='r', linestyle='--', label=f'Q2: {q2:.2f}')
     plt.axvline(q3, color='k', linestyle='--', label=f'Q3: {q3:.2f}')
     plt.xlabel('Time in hours')
     plt.ylabel('Probability value')
