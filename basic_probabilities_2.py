@@ -24,13 +24,13 @@ def main():
     prob_values = pdf(y_values)
 
 
-    # In order to display the mean and variance, we
-    # Calculate the mean (since our pdf is limited to 0;np.inf, as we are dealing with time)
+    # Calculating the mean and variance using the correspondent math formulas over 0 to infinite
+    # The intervals are from 0 to infinite, since they describe time
     mean = quad(lambda y: y * pdf(y), 0, np.inf)[0]
     variance = (quad(lambda y: y ** 2 * pdf(y), 0, np.inf)[0]) - mean ** 2
 
     # To display the quartiles, we extract the root (found by approximating within the specified bracket parameter)
-    # The function corresponds to cdf(y)-probability=0, where the resulting y is the quantile of the specified probability
+    # Function corresponds to cdf(y)-probability=0, where the resulting y is the quantile of the specified probability
     def get_quantile(probability):
         return root_scalar(lambda y: cdf(y) - probability, bracket=[0, 10]).root
 
@@ -38,16 +38,29 @@ def main():
     q2 = get_quantile(0.50)
     q3 = get_quantile(0.75)
 
+    # Printing in the console the mean, variance, and quantiles
+    print("The mean is: ", mean)
+    print("The variance is: ", variance)
+    print("The Q1 is: ", q1)
+    print("The Q2 or median is: ", q2)
+    print("The Q3 is: ", q3)
+
 
     # Now we can plot and display the pdf graph
+    # We will also display the representation lines of the Mean, Variance, Q1, Q2, and Q3
     plt.figure(figsize=(10, 5))
     plt.plot(y_values, prob_values, label='PDF')
+    plt.axvline(mean, color='r', linestyle='--', label=f'Mean: {mean:.2f}')
+    plt.axvline(q1, color='g', linestyle='--', label=f'Q1: {q1:.2f}')
+    plt.axvline(q2, color='b', linestyle='--', label=f'Median: {q2:.2f}')
+    plt.axvline(q3, color='g', linestyle='--', label=f'Q3: {q3:.2f}')
     plt.xlabel('Time in hours')
     plt.ylabel('Probability value')
     plt.title('Probability Density Function Graph')
     plt.legend()
     plt.grid(True)
     plt.show()
+
 
     # In order to display the histogram, we will generate 120 values between 2 and 4, which corresponds to 4h-2h=2hours
     # Then we will determine the probabilities in each probability value
@@ -64,6 +77,9 @@ def main():
     plt.title('Probability/minute Histogram')
     plt.grid(True)
     plt.show()
+
+
+
 
 
 # def mean_variance_quartile():
@@ -97,14 +113,14 @@ def main():
     # print(f"Q1: {q1:.4f}")
     # print(f"Median: {median:.4f}")
     # print(f"Q3: {q3:.4f}")
+
+    # # Define the range for y
+    # y = np.linspace(0, 4, 500)
     #
-    # # # Define the range for y
-    # # y = np.linspace(0, 4, 500)
-    # #
-    # # # Calculate the PDF values
-    # # pdf_values = pdf(y)
-    #
-    # # Plot the PDF with mean and quartiles
+    # # Calculate the PDF values
+    # pdf_values = pdf(y)
+
+    # Plot the PDF with mean and quartiles
     # plt.figure(figsize=(10, 5))
     # plt.plot(y, pdf_values, label='PDF')
     # plt.axvline(mean, color='r', linestyle='--', label=f'Mean: {mean:.2f}')
@@ -121,3 +137,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
