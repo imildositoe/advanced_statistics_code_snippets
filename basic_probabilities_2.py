@@ -9,7 +9,7 @@ def main():
     def pdf(y):
         return (10 / 99) * np.exp(-5 * y ** 2) * (32 * np.exp(y ** 2) + 59) * y
 
-    # Then we can define the cumulative probability function, by integrating (quad) the pfd from 0 to y.
+    # Then we can define the cumulative density function cdf
     def cdf(y):
         return 1 - ((40 / 99) * np.exp(-4 * y ** 2) + (59 / 99) * np.exp(-5 * y ** 2))
 
