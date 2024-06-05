@@ -42,7 +42,7 @@ def main():
     print("The mean is: ", mean)
     print("The variance is: ", variance)
     print("The Q1 is: ", q1)
-    print("The Q2 or median is: ", q2)
+    print("The Q2 is: ", q2)
     print("The Q3 is: ", q3)
 
     # Now we can plot and display the pdf graph.
