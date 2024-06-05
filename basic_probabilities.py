@@ -5,23 +5,6 @@ from scipy.stats import poisson
 from scipy.stats import nbinom
 
 
-def proportions_viz():
-    # Data
-    outcomes = ['For', 'Against']
-    proportions = [0.71, 0.29]  # Proportions of 'For' and 'Against' outcomes
-
-    # Create bar chart
-    plt.bar(outcomes, proportions, color=['pink', 'purple'])
-
-    # Add labels and title
-    plt.xlabel('Outcome')
-    plt.ylabel('Proportion')
-    plt.title('Proportion of "For" and "Against" Outcomes')
-
-    # Show plot
-    plt.show()
-
-
 def poisson_dist():
     # Parameters
     lambda_ = 71
