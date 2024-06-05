@@ -11,7 +11,7 @@ def main():
 
     # Then we can define the cumulative probability function, by integrating (quad) the pfd from 0 to y.
     def cdf(y):
-        return quad(pdf, 0, y)[0]
+        return 1 - ((40 / 99) * np.exp(-4 * y ** 2) + (59 / 99) * np.exp(-5 * y ** 2))
 
     # Then we calculate the probability of waiting between 2 and 4 hours using the definite integral function quad.
     # We print the calculated probability by taking only the first item prob[0].
@@ -71,6 +71,11 @@ def main():
     # Now we can plot the histogram displaying each bar with the probability of being in that minute.
     plt.figure(figsize=(10, 5))
     plt.bar(y_values_minutes, prob_per_minute, width=1 / 60, edgecolor='black', alpha=0.7)
+    plt.axvline(mean, color='r', linestyle='--', label=f'Mean: {mean:.2f}')
+    plt.axvline(variance, color='g', linestyle='--', label=f'Variance: {variance:.2f}')
+    plt.axvline(q1, color='y', linestyle='--', label=f'Q1: {q1:.2f}')
+    plt.axvline(q2, color='b', linestyle='--', label=f'Q2: {q2:.2f}')
+    plt.axvline(q3, color='k', linestyle='--', label=f'Q3: {q3:.2f}')
     plt.xlabel('Time in hours')
     plt.ylabel('Probability value/minute')
     plt.title('Probability/minute Histogram')
