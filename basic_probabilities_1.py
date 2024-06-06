@@ -13,6 +13,16 @@ probabilities = poisson.pmf(k_values, lambda_)
 threshold = 0.005
 valid_k = k_values[probabilities >= threshold]
 
+print('K Values: ', k_values)
+print('--------------------------------')
+print('Probabilities: ', probabilities)
+print('--------------------------------')
+print('Threshold: ', threshold)
+print('--------------------------------')
+print('Valid Ks: ', valid_k)
+print('--------------------------------')
+
+
 # Plotting
 plt.figure(figsize=(12, 6))
 plt.bar(valid_k, probabilities[probabilities >= threshold], color='skyblue', alpha=0.7, label='P(X=k)')
