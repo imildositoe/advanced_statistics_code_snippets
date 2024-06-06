@@ -1,48 +1,33 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import poisson
+import matplotlib.pyplot as plt
 
-# Parameters
-lambda_ = 71
+lambda_value = 71
+threshold_value = 0.005
 
 # Calculate probabilities until they drop below 0.5%
-k_values = np.arange(0, 140)
-probabilities = poisson.pmf(k_values, lambda_)
+values_of_k = np.arange(0, 100)
+probs = poisson.pmf(values_of_k, lambda_value)
 
 # Determine the range of k where probabilities are above 0.5%
-threshold = 0.005
-valid_k = k_values[probabilities >= threshold]
-
-print('K Values: ', k_values)
-print('--------------------------------')
-print('Probabilities: ', probabilities)
-print('--------------------------------')
-print('Threshold: ', threshold)
-print('--------------------------------')
-print('Valid Ks: ', valid_k)
-print('--------------------------------')
-
-
-# Plotting
-plt.figure(figsize=(12, 6))
-plt.bar(valid_k, probabilities[probabilities >= threshold], color='skyblue', alpha=0.7, label='P(X=k)')
-plt.xlabel('Number of Meteorites (k)')
-plt.ylabel('Probability')
-plt.title('Poisson Distribution: Meteorites Falling on an Ocean')
-plt.axvline(x=lambda_, color='red', linestyle='--', label=f'Expectation (E[X] = {lambda_})')
+valid_k_value = values_of_k[probs >= threshold_value]
 
 # Calculate and plot the median
-cdf = poisson.cdf(k_values, lambda_)
-median = np.where(cdf >= 0.5)[0][0]
-plt.axvline(x=median, color='green', linestyle='--', label=f'Median (median = {median})')
+cdf = poisson.cdf(values_of_k, lambda_value)
+median_value = np.where(cdf >= 0.5)[0][0]
+expectation_value = lambda_value
 
-# Show legend
+print("Expectation value: ", expectation_value)
+print("Median value: ", median_value)
+
+# Plotting
+plt.figure(figsize=(10, 5))
+plt.bar(valid_k_value, probs[probs >= threshold_value], color='c', alpha=0.7, label='P(X = k)')
+plt.axvline(x=lambda_value, color='k', linestyle='--', label=f'Expectation: {lambda_value})')
+plt.axvline(x=median_value, color='r', linestyle='--', label=f'Median: {median_value})')
+plt.xlabel('Meteorites number / k value')
+plt.ylabel('Probability value')
+plt.title('Meteorites falling on an ocean')
 plt.legend()
+plt.grid(True)
 plt.show()
-
-# Expectation
-expectation = lambda_
-print(f'Expectation (E[X]): {expectation}')
-
-# Median
-print(f'Median: {median}')
