@@ -5,16 +5,17 @@ import matplotlib.pyplot as plt
 lambda_value = 71
 threshold_value = 0.005
 
-# First we generate the K values from 1 to 100 to be used to compute the probabilities until we find the range
-# of K values where the probability remains less than 0.5% (0.005) for any bigger number of meteorites
-values_of_k = np.arange(1, 100)
-probs = poisson.pmf(values_of_k, lambda_value)
-valid_k_values = values_of_k[probs >= threshold_value]
-
 # Here we calculate the expectation value by attributing the lambda value given in the task
 # Then we compute the approximation value of median based on Wikipedia-Poisson formula
 expectation_value = lambda_value
 median_value = round(lambda_value + (1 / 3) - (1 / (50 * lambda_value)), 1)
+
+# First we generate the K values from 1 to 100 to be used to compute the probabilities until we find the range
+# of K values where the probability remains less than 0.5% (0.005) for any bigger number of meteorites
+values_of_k = np.arange(1, expectation_value * 2)
+probs = poisson.pmf(values_of_k, lambda_value)
+valid_k_values = values_of_k[probs >= threshold_value]
+print(values_of_k)
 
 # Here we print in the console the calculated Expectation and Median values
 print("Expectation value: ", expectation_value)
