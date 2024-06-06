@@ -9,8 +9,6 @@ threshold_value = 0.005
 # of K values where the probability remains less than 0.5% (0.005) for any bigger number of meteorites
 values_of_k = np.arange(1, 100)
 probs = poisson.pmf(values_of_k, lambda_value)
-
-# Determine the range of k where probabilities are above 0.5%
 valid_k_values = values_of_k[probs >= threshold_value]
 
 # Here we calculate the expectation value by attributing the given lambda value in the task
