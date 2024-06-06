@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 lambda_value = 71
 threshold_value = 0.005
 
-# First we generate values from 1 to 100
-# Calculate probabilities until they drop below 0.5%
+# First we generate the K values from 1 to 100 to be used to compute the probabilities until we find the range
+# of K values where the probability remains less than 0.5% (0.005) for any bigger number of meteorites
 values_of_k = np.arange(1, 100)
 probs = poisson.pmf(values_of_k, lambda_value)
 
@@ -22,7 +22,8 @@ median_value = round(lambda_value + (1 / 3) - (1 / (50 * lambda_value)), 1)
 print("Expectation value: ", expectation_value)
 print("Median value: ", median_value)
 
-# Plotting
+# Here we plot the graph displaying the probabilities of meteorites falling on an ocean within the given conditions
+# We also display in the same graph the representation lines of the Expectation and the Median
 plt.figure(figsize=(10, 5))
 plt.bar(valid_k_values, probs[probs >= threshold_value], color='c', alpha=0.7, label='P(X = k)')
 plt.axvline(x=lambda_value, color='k', linestyle='--', label=f'Expectation: {lambda_value}')
