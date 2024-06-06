@@ -28,7 +28,7 @@ plt.axvline(x=lambda_value, color='k', linestyle='--', label=f'Expectation: {lam
 plt.axvline(x=median_value, color='r', linestyle='--', label=f'Median: {median_value}')
 plt.xlabel('Meteorites number / k value')
 plt.ylabel('Probability value')
-plt.title('Meteorites falling on an ocean')
+plt.title('Meteorites falling on an ocean in a given Year')
 plt.legend()
 plt.grid(True)
 plt.show()
