@@ -11,7 +11,7 @@ values_of_k = np.arange(1, 100)
 probs = poisson.pmf(values_of_k, lambda_value)
 valid_k_values = values_of_k[probs >= threshold_value]
 
-# Here we calculate the expectation value by attributing the given lambda value in the task
+# Here we calculate the expectation value by attributing the lambda value given in the task
 # Then we compute the approximation value of median based on Wikipedia-Poisson formula
 expectation_value = lambda_value
 median_value = round(lambda_value + (1 / 3) - (1 / (50 * lambda_value)), 1)
