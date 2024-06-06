@@ -18,7 +18,7 @@ valid_k_values = values_of_k[probs >= threshold_value]
 expectation_value = lambda_value
 median_value = round(lambda_value + (1 / 3) - (1 / (50 * lambda_value)), 1)
 
-# Here we print in the console the calculated Expectation and Median
+# Here we print in the console the calculated Expectation and Median values
 print("Expectation value: ", expectation_value)
 print("Median value: ", median_value)
 
