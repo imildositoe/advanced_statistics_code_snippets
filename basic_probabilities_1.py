@@ -20,6 +20,7 @@ valid_k_values = values_of_k[probs >= threshold_value]
 print("Expectation value: ", expectation_value)
 print("Median value: ", median_value)
 print("Valid k values: ", valid_k_values)
+print("Valid k values: ", valid_k_values)
 print("Valid probabilities", probs[probs >= threshold_value])
 
 # Here we plot the graph displaying the probabilities of meteorites falling on an ocean within the given conditions
