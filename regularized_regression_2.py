@@ -16,6 +16,9 @@ data = [
 x = np.array([point[0] for point in data])
 y = np.array([point[1] for point in data])
 
+# Scatter plot of original data
+plt.scatter(x, y, color='blue', label='Data Points')
+
 # Create the design matrix for a 10th degree polynomial
 X = np.vander(x, 11, increasing=True)
 
@@ -28,18 +31,15 @@ lambda_ = 1e-5  # Adjust lambda as necessary
 # Ridge estimation
 a_ridge = np.linalg.inv(X.T @ X + lambda_ * np.identity(11)) @ X.T @ y
 
-# Scatter plot of original data
-plt.scatter(x, y, color='blue', label='Data Points')
-
 # Plot OLS fit
 x_fit = np.linspace(min(x), max(x), 1000)
 X_fit = np.vander(x_fit, 11, increasing=True)
 y_fit_ols = X_fit @ a_ols
-plt.plot(x_fit, y_fit_ols, color='red', label='OLS Fit')
+# plt.plot(x_fit, y_fit_ols, color='red', label='OLS Fit')
 
 # Plot Ridge fit
 y_fit_ridge = X_fit @ a_ridge
-plt.plot(x_fit, y_fit_ridge, color='green', label='Ridge Fit')
+# plt.plot(x_fit, y_fit_ridge, color='green', label='Ridge Fit')
 
 plt.xlabel('x')
 plt.ylabel('y')
