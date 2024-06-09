@@ -1,5 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import KFold
+from sklearn.linear_model import Ridge
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
 
 # Given data points
 data = [
@@ -19,27 +23,76 @@ y = np.array([point[1] for point in data])
 # Scatter plot of original data
 plt.scatter(x, y, color='blue', label='Data Points')
 
-# Create the design matrix for a 10th degree polynomial
+
+
+# Create the design matrix for a 10th degree polynomial (# Create polynomial features (Vandermonde matrix))
 X = np.vander(x, 11, increasing=True)
+
+# Standardize the features
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+
+
 
 # OLS estimation
 a_ols = np.linalg.inv(X.T @ X) @ X.T @ y
-
-# Ridge regularization parameter
-lambda_ = 1e-5  # Adjust lambda as necessary
-
-# Ridge estimation
-a_ridge = np.linalg.inv(X.T @ X + lambda_ * np.identity(11)) @ X.T @ y
 
 # Plot OLS fit
 x_fit = np.linspace(min(x), max(x), 1000)
 X_fit = np.vander(x_fit, 11, increasing=True)
 y_fit_ols = X_fit @ a_ols
-# plt.plot(x_fit, y_fit_ols, color='red', label='OLS Fit')
+print('Coefficients OLS: \n', a_ols)
+plt.plot(x_fit, y_fit_ols, color='red', label='OLS Fit')
+
+
+
+# Applying the cross-validation technique to choose the best weight value lambda_value
+# Define the range of lambda values to test (avoid extremely small values)
+lambdas = np.logspace(-5, 5, 100)
+
+# Number of folds for cross-validation
+k = 5
+kf = KFold(n_splits=k)
+
+# To store the average validation errors for each lambda
+validation_errors = []
+
+for lambda_ in lambdas:
+    fold_errors = []
+
+    for train_index, val_index in kf.split(X_scaled):
+        X_train, X_val = X_scaled[train_index], X_scaled[val_index]
+        y_train, y_val = y[train_index], y[val_index]
+
+        # Train Ridge regression model
+        model = Ridge(alpha=lambda_)
+        model.fit(X_train, y_train)
+
+        # Predict on validation set
+        y_val_pred = model.predict(X_val)
+
+        # Calculate validation error (mean squared error)
+        fold_errors.append(mean_squared_error(y_val, y_val_pred))
+
+    # Average validation error for this lambda
+    validation_errors.append(np.mean(fold_errors))
+
+# Find the optimal lambda with the lowest validation error
+optimal_lambda = lambdas[np.argmin(validation_errors)]
+print(f'Optimal Lambda: {optimal_lambda}')
+
+
+# Ridge regularization parameter
+# lambda_ = 1e-5  # Adjust lambda as necessary
+
+# Ridge estimation
+a_ridge = np.linalg.inv(X.T @ X + optimal_lambda * np.identity(11)) @ X.T @ y
 
 # Plot Ridge fit
 y_fit_ridge = X_fit @ a_ridge
-# plt.plot(x_fit, y_fit_ridge, color='green', label='Ridge Fit')
+print('Coefficients Ridge: \n', a_ridge)
+plt.plot(x_fit, y_fit_ridge, color='green', label='Ridge Fit')
 
 plt.xlabel('x')
 plt.ylabel('y')
