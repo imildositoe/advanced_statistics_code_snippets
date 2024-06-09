@@ -23,76 +23,56 @@ y = np.array([point[1] for point in y_data])
 # Then we display the original data points as a scatter plot
 plt.scatter(x, y, color='k', label='Y Data Points')
 
-# Here we create the design matrix using the Numpy vander function
+# Here we create the design matrix using the Numpy vander function with the degree 11
 # Then we scale our data to mitigate numerical instability as well as correlation
+# And we perform the Ordinary Least Squares estimation and store in the beta_ols
 X = np.vander(x, 11, increasing=True)
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+scaled_X = scaler.fit_transform(X)
+beta_ols = np.linalg.inv(X.T @ X) @ X.T @ y
 
-
-
-
-# OLS estimation
-a_ols = np.linalg.inv(X.T @ X) @ X.T @ y
-
-# Plot OLS fit
+# Here we fit our Ordinary Least Squares model
+# Then we plot our Ordinary Least Squares fit in the graph
+# And we print the coefficients in the console
 x_fit = np.linspace(min(x), max(x), 1000)
 X_fit = np.vander(x_fit, 11, increasing=True)
-y_fit_ols = X_fit @ a_ols
-print('Coefficients OLS: \n', a_ols)
-plt.plot(x_fit, y_fit_ols, color='red', label='OLS Fit')
+y_fit_ols = X_fit @ beta_ols
+plt.plot(x_fit, y_fit_ols, color='r', label='OLS Fit')
+print('Coefficients OLS: \n', beta_ols)
 
-
-
-# Applying the cross-validation technique to choose the best weight value lambda_value
-# Define the range of lambda values to test (avoid extremely small values)
-lambdas = np.logspace(-5, 5, 100)
-
-# Number of folds for cross-validation
+# Before proceeding with the Ridge-regularization, we choose our lambda parameter using Cross-Validation
+# For that we define the range [-5; 100] to be looped to find the best lambda value
+# Then we choose 5 as the number of folds for CV, and we run the double-loop to find the optimal lambda value
+# And we then print the CV lambda
+lambda_values = np.logspace(-5, 5, 100)
 k = 5
 kf = KFold(n_splits=k)
+validat_errors = []
 
-# To store the average validation errors for each lambda
-validation_errors = []
-
-for lambda_ in lambdas:
+for lambda_ in lambda_values:
     fold_errors = []
-
-    for train_index, val_index in kf.split(X_scaled):
-        X_train, X_val = X_scaled[train_index], X_scaled[val_index]
+    for train_index, val_index in kf.split(scaled_X):
+        X_train, X_val = scaled_X[train_index], scaled_X[val_index]
         y_train, y_val = y[train_index], y[val_index]
-
-        # Train Ridge regression model
         model = Ridge(alpha=lambda_)
         model.fit(X_train, y_train)
+        y_predicted = model.predict(X_val)
+        fold_errors.append(mean_squared_error(y_val, y_predicted))
+    validat_errors.append(np.mean(fold_errors))
+cv_lambda = lambda_values[np.argmin(validat_errors)]
+print('Cross-Validated Lambda value: ', cv_lambda)
 
-        # Predict on validation set
-        y_val_pred = model.predict(X_val)
+# Then we perform the Ridge estimation using the Cross-Validated (the best lambda value)
+beta_ridge = np.linalg.inv(X.T @ X + cv_lambda * np.identity(11)) @ X.T @ y
 
-        # Calculate validation error (mean squared error)
-        fold_errors.append(mean_squared_error(y_val, y_val_pred))
-
-    # Average validation error for this lambda
-    validation_errors.append(np.mean(fold_errors))
-
-# Find the optimal lambda with the lowest validation error
-optimal_lambda = lambdas[np.argmin(validation_errors)]
-print(f'Optimal Lambda: {optimal_lambda}')
-
-
-# Ridge regularization parameter
-# lambda_ = 1e-5  # Adjust lambda as necessary
-
-# Ridge estimation
-a_ridge = np.linalg.inv(X.T @ X + optimal_lambda * np.identity(11)) @ X.T @ y
-
-# Plot Ridge fit
-y_fit_ridge = X_fit @ a_ridge
-print('Coefficients Ridge: \n', a_ridge)
-plt.plot(x_fit, y_fit_ridge, color='green', label='Ridge Fit')
+# Then we perform the Ridge fit, and we plot in our graph
+# And finally we display the final graph with the Scatter, OLS fit, and Ridge fit
+y_fit_ridge = X_fit @ beta_ridge
+plt.plot(x_fit, y_fit_ridge, color='g', label='Ridge Fit')
+print('Coefficients Ridge: \n', beta_ridge)
 
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
-plt.title('Polynomial Fit with OLS and Ridge Regularization')
+plt.title('Scatter, OLS and Ridge Regularization Fit')
 plt.show()
