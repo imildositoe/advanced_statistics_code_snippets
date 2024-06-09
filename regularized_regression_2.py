@@ -5,8 +5,8 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 
-# Given data points
-data = [
+# Given data in the task
+y_data = [
     (-3, -470285.75), (-13, -896973342427.97), (16, -5969502572609.42),
     (-5, -72645568.04), (13, -741877267973.1), (-19, -37137459427225.83),
     (12, -340017811793.51), (-17, -13102338007357.26), (-2, -9823.26),
@@ -16,19 +16,16 @@ data = [
     (-7, -2063362968.96), (8, -5555367334.52), (14, -1525579228478.32)
 ]
 
-# Separate data into x and y
-x = np.array([point[0] for point in data])
-y = np.array([point[1] for point in data])
+# Here we are splitting the data into x and y
+x = np.array([point[0] for point in y_data])
+y = np.array([point[1] for point in y_data])
 
-# Scatter plot of original data
-plt.scatter(x, y, color='blue', label='Data Points')
+# Then we display the original data points as a scatter plot
+plt.scatter(x, y, color='k', label='Y Data Points')
 
-
-
-# Create the design matrix for a 10th degree polynomial (# Create polynomial features (Vandermonde matrix))
+# Here we create the design matrix using the Numpy vander function
+# Then we scale our data to mitigate numerical instability as well as correlation
 X = np.vander(x, 11, increasing=True)
-
-# Standardize the features
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
