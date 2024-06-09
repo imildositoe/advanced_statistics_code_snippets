@@ -21,6 +21,7 @@ x = np.array([point[0] for point in y_data])
 y = np.array([point[1] for point in y_data])
 
 # Then we display the original data points as a scatter plot
+plt.figure(figsize=(10, 5))
 plt.scatter(x, y, color='k', label='Y Data Points')
 
 # Here we create the design matrix using the Numpy vander function with the degree 11
