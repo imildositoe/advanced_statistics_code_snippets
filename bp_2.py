@@ -39,11 +39,8 @@ def main():
     q3 = get_quantile(0.75)
 
     # Printing in the console the mean, variance, and quantiles.
-    print("The mean is: ", mean)
-    print("The variance is: ", variance)
-    print("The Q1 is: ", q1)
-    print("The Q2 is: ", q2)
-    print("The Q3 is: ", q3)
+    print('The mean is: ', mean, '\nThe variance is: ', variance)
+    print('The Q1 is: ', q1, ', \nThe Q2 is: ', q2, '\nThe Q3 is: ', q3)
 
     # Now we can plot and display the pdf graph.
     # We will also display the representation lines of the Mean, Variance, Q1, Q2, and Q3.
